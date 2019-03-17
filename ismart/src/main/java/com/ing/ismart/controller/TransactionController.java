@@ -50,7 +50,7 @@ public class TransactionController {
 		return responseModel;
 	} 
 	
-	@GetMapping("transaction")
+	@GetMapping("avgmonthbalance")
 	public ResponseModel getAverageMonthlyBalance() {
 		ResponseModel responseModel = new ResponseModel();
 		TransactionResponse res = null;
