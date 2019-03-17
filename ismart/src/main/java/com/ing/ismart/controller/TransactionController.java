@@ -48,6 +48,40 @@ public class TransactionController {
 	responseModel.setData(list);
 		return responseModel;
 	} 
+	
+	@GetMapping("transaction")
+	public ResponseModel getAverageMonthlyBalance() {
+		ResponseModel responseModel = new ResponseModel();
+		TransactionResponse res = null;
+		List<TransactionResponse> list = transactionService.getTransactions();
+		
+		double average = 0,averageoutflow=0, amountsum=0, outflowsum=0 ;
+		Iterator itr = list.iterator();
+		while(itr.hasNext()) {
+			res = (TransactionResponse) itr.next();
+			
+			if(res.getPaymentType() == "Dr") {
+				outflowsum=outflowsum + res.getAmount();
+				
+			}
+			if(res.getPaymentType() == "Cr") {
+				amountsum = amountsum + res.getAmount();
+			}
+		}
+		
+		try {
+			average = amountsum/30;
+			averageoutflow = outflowsum/30;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(average);
+		responseModel.setData(average);
+		responseModel.setData(averageoutflow);
+		
+		return responseModel;
+	}
 
 
 }
